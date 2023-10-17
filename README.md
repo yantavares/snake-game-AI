@@ -1,4 +1,4 @@
-# SNAKE AI: Deep Q Reinforcement Learning :snake:
+# SNAKE AI - Deep Q Reinforcement Learning :snake:
 
 ## Introduction:
 
