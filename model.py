@@ -46,7 +46,7 @@ class QTrainer:
             next_state = torch.unsqueeze(next_state, 0)
             action = torch.unsqueeze(action, 0)
             reward = torch.unsqueeze(reward, 0)
-            done = torch.unsqueeze(done, )  # tuple with 1 value
+            done = (done, )  # tuple with 1 value
 
         # SIMPLIFIED BELLMAN
 
