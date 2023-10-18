@@ -135,7 +135,7 @@ class SnakeGameAI:
             self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
 
         score_text = font.render("Score: " + str(self.score), True, WHITE)
-        speed_text = font.render("Speed: " + str(SPEED), True, WHITE)  # Render current speed
+        speed_text = font.render("(Use arrow keys) Speed: " + str(SPEED), True, WHITE)  # Render current speed
 
         self.display.blit(score_text, [0, 0])
         self.display.blit(speed_text, [0, 30])
