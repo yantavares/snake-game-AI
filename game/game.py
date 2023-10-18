@@ -32,8 +32,10 @@ BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
 SPEED = 40
-SPEED_CHANGE = 5
-
+# Right and left
+SPEED_CHANGE_RL = 5
+# Up and down
+SPEED_CHANGE_UD = 50
 
 
 class SnakeGameAI:
@@ -80,9 +82,15 @@ class SnakeGameAI:
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    SPEED += SPEED_CHANGE
+                    SPEED += SPEED_CHANGE_UD
                 if event.key == pygame.K_DOWN:
-                    SPEED = max(SPEED - SPEED_CHANGE, 10)  # Avoid negative speed
+                    # Avoid negative speed
+                    SPEED = max(SPEED - SPEED_CHANGE_UD, 50)
+                if event.key == pygame.K_LEFT:
+                    SPEED += SPEED_CHANGE_RL
+                if event.key == pygame.K_RIGHT:
+                    # Avoid negative speed
+                    SPEED = max(SPEED - SPEED_CHANGE_RL, 5)
 
         # 2. move
         self._move(action)  # update the head
@@ -129,19 +137,20 @@ class SnakeGameAI:
             pygame.draw.rect(self.display, BLUE1, pygame.Rect(
                 pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
             pygame.draw.rect(self.display, BLUE2,
-                            pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+                             pygame.Rect(pt.x+4, pt.y+4, 12, 12))
 
         pygame.draw.rect(self.display, RED, pygame.Rect(
             self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
 
         score_text = font.render("Score: " + str(self.score), True, WHITE)
-        speed_text = font.render("(Use arrow keys) Speed: " + str(SPEED), True, WHITE)  # Render current speed
+        # Render current speed
+        speed_text = font.render(
+            "(Use arrow keys) Speed: " + str(SPEED), True, WHITE)
 
         self.display.blit(score_text, [0, 0])
         self.display.blit(speed_text, [0, 30])
 
         pygame.display.flip()
-
 
     def _move(self, action):
         # [straight, right, left]
