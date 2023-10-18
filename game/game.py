@@ -32,6 +32,8 @@ BLACK = (0, 0, 0)
 
 BLOCK_SIZE = 20
 SPEED = 40
+SPEED_CHANGE = 5
+
 
 
 class SnakeGameAI:
@@ -67,6 +69,8 @@ class SnakeGameAI:
             self._place_food()
 
     def play_step(self, action):
+        global SPEED
+
         self.frame_iteration += 1
 
         # 1. collect user input
@@ -74,6 +78,11 @@ class SnakeGameAI:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    SPEED += SPEED_CHANGE
+                if event.key == pygame.K_DOWN:
+                    SPEED = max(SPEED - SPEED_CHANGE, 10)  # Avoid negative speed
 
         # 2. move
         self._move(action)  # update the head
@@ -120,14 +129,19 @@ class SnakeGameAI:
             pygame.draw.rect(self.display, BLUE1, pygame.Rect(
                 pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
             pygame.draw.rect(self.display, BLUE2,
-                             pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+                            pygame.Rect(pt.x+4, pt.y+4, 12, 12))
 
         pygame.draw.rect(self.display, RED, pygame.Rect(
             self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
 
-        text = font.render("Score: " + str(self.score), True, WHITE)
-        self.display.blit(text, [0, 0])
+        score_text = font.render("Score: " + str(self.score), True, WHITE)
+        speed_text = font.render("Speed: " + str(SPEED), True, WHITE)  # Render current speed
+
+        self.display.blit(score_text, [0, 0])
+        self.display.blit(speed_text, [0, 30])
+
         pygame.display.flip()
+
 
     def _move(self, action):
         # [straight, right, left]
