@@ -86,9 +86,9 @@ class SnakeGameAI:
                 if event.key == pygame.K_DOWN:
                     # Avoid negative speed
                     SPEED = max(SPEED - SPEED_CHANGE_UD, 50)
-                if event.key == pygame.K_LEFT:
-                    SPEED += SPEED_CHANGE_RL
                 if event.key == pygame.K_RIGHT:
+                    SPEED += SPEED_CHANGE_RL
+                if event.key == pygame.K_LEFT:
                     # Avoid negative speed
                     SPEED = max(SPEED - SPEED_CHANGE_RL, 5)
 
